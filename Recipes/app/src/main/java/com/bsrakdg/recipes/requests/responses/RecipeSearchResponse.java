@@ -1,5 +1,6 @@
 package com.bsrakdg.recipes.requests.responses;
 
+import com.bsrakdg.recipes.models.Recipe;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -12,7 +13,7 @@ public class RecipeSearchResponse {
 
     @SerializedName("recipes")
     @Expose()
-    private List<RecipeResponse> recipes;
+    private List<Recipe> recipes;
 
     @Override
     public String toString() {
@@ -26,7 +27,7 @@ public class RecipeSearchResponse {
         return count;
     }
 
-    public List<RecipeResponse> getRecipes() {
+    public List<Recipe> getRecipes() {
         return recipes;
     }
 }
