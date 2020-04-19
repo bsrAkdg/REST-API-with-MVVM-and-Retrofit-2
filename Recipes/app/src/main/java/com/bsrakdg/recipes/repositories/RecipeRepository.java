@@ -4,16 +4,17 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.bsrakdg.recipes.models.Recipe;
+import com.bsrakdg.recipes.requests.RecipeApiClient;
 
 import java.util.List;
 
 public class RecipeRepository {
 
     private static RecipeRepository instance;
-    private MutableLiveData<List<Recipe>> recipes;
+    private RecipeApiClient recipeApiClient;
 
     private RecipeRepository() {
-        recipes = new MutableLiveData<>();
+        recipeApiClient = RecipeApiClient.getInstance();
     }
 
     public static RecipeRepository getInstance() {
@@ -24,6 +25,6 @@ public class RecipeRepository {
     }
 
     public LiveData<List<Recipe>> getRecipes() {
-        return recipes;
+        return recipeApiClient.getRecipes();
     }
 }
