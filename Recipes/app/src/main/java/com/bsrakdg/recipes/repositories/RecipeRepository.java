@@ -1,7 +1,6 @@
 package com.bsrakdg.recipes.repositories;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.bsrakdg.recipes.models.Recipe;
 import com.bsrakdg.recipes.requests.RecipeApiClient;
@@ -26,5 +25,13 @@ public class RecipeRepository {
 
     public LiveData<List<Recipe>> getRecipes() {
         return recipeApiClient.getRecipes();
+    }
+
+    public void searchRecipesApi(String query, int pageNumber) {
+        // api needed
+        if (pageNumber == 0) {
+            pageNumber = 1;
+        }
+        recipeApiClient.searchRecipesApi(query, pageNumber);
     }
 }

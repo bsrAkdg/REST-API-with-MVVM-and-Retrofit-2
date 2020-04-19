@@ -55,10 +55,7 @@ public class RecipeApiClient {
         /* Future : A Future represents the result of an asynchronous computation.
           Methods are provided to check if the computation is complete, to wait for its completion
           and to retrieve the result of the computation. */
-        final Future handler = AppExecutors.getInstance().getNetworkIO().submit(() -> {
-            // Retrieve data from rest api with use custom runnable
-            // recipes.postValue();
-        });
+        final Future handler = AppExecutors.getInstance().getNetworkIO().submit(retrieveRecipesRunnable);
 
         // Time out
         AppExecutors.getInstance().getNetworkIO().schedule(() -> {
