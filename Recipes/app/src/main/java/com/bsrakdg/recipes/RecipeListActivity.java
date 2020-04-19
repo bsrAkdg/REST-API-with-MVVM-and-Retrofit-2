@@ -1,12 +1,10 @@
 package com.bsrakdg.recipes;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.bsrakdg.recipes.models.Recipe;
+import com.bsrakdg.recipes.util.Testing;
 import com.bsrakdg.recipes.viewmodels.RecipeListViewModel;
 
 public class RecipeListActivity extends BaseActivity {
@@ -34,11 +32,7 @@ public class RecipeListActivity extends BaseActivity {
     private void subscribeObservers() {
         recipeListViewModel.getRecepies().observe(this, recipes -> {
             // trigger updated, deleted, anything changes
-            if (recipes != null) {
-                for (Recipe recipe : recipes) {
-                    Log.d(TAG, "onChanged: " + recipe.getTitle());
-                }
-            }
+            Testing.printRecipes(recipes, TAG);
         });
     }
 
