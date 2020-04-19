@@ -1,21 +1,22 @@
 package com.bsrakdg.recipes.viewmodels;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.bsrakdg.recipes.models.Recipe;
+import com.bsrakdg.recipes.repositories.RecipeRepository;
 
 import java.util.List;
 
 public class RecipeListViewModel extends ViewModel {
 
-    private MutableLiveData<List<Recipe>> recepies = new MutableLiveData<List<Recipe>>();
+    private RecipeRepository recipeRepository;
 
     public RecipeListViewModel() {
+        recipeRepository = RecipeRepository.getInstance();
     }
 
     public LiveData<List<Recipe>> getRecepies() {
-        return recepies;
+        return recipeRepository.getRecipes();
     }
 }
