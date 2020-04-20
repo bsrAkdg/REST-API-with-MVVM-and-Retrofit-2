@@ -12,6 +12,10 @@ public class RecipeRepository {
     private static RecipeRepository instance;
     private RecipeApiClient recipeApiClient;
 
+    // pagination
+    private String query;
+    private int pageNumber;
+
     private RecipeRepository() {
         recipeApiClient = RecipeApiClient.getInstance();
     }
@@ -27,14 +31,19 @@ public class RecipeRepository {
         return recipeApiClient.getRecipes();
     }
 
+    public void searchNextPage() {
+        searchRecipesApi(query, pageNumber + 1);
+    }
+
     public void searchRecipesApi(String query, int pageNumber) {
         // api needed
         if (pageNumber == 0) {
             pageNumber = 1;
         }
+        this.query = query; // pagination
+        this.pageNumber = pageNumber; //pagination
         recipeApiClient.searchRecipesApi(query, pageNumber);
     }
-
     public void cancelRequest() {
         recipeApiClient.cancelRequest();
     }

@@ -66,4 +66,12 @@ public class RecipeListViewModel extends ViewModel {
         isPerformingQuery = true;
         recipeRepository.searchRecipesApi(query, pageNumber);
     }
+
+    public void searchNextPage() {
+        if (!isPerformingQuery && isViewingRecipes) {
+            // if there isn't any working query and recyclerview shows recipes list (not
+            // categories) call next page
+            recipeRepository.searchNextPage();
+        }
+    }
 }
