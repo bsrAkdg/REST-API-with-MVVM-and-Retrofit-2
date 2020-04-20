@@ -60,6 +60,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+                recipeAdapter.displayLoading();
                 // new search page number should be 1
                 searchRecipesApi(s, 1);
                 return false;
