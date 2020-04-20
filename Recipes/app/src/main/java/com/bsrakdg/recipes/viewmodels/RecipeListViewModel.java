@@ -19,6 +19,10 @@ public class RecipeListViewModel extends ViewModel {
         recipeRepository = RecipeRepository.getInstance();
     }
 
+    public LiveData<List<Recipe>> getRecepies() {
+        return recipeRepository.getRecipes();
+    }
+
     public boolean isViewingRecipes() {
         return isViewingRecipes;
     }
@@ -27,8 +31,12 @@ public class RecipeListViewModel extends ViewModel {
         isViewingRecipes = viewingRecipes;
     }
 
-    public LiveData<List<Recipe>> getRecepies() {
-        return recipeRepository.getRecipes();
+    public boolean onBackPressed() {
+        if (isViewingRecipes) {
+            isViewingRecipes = false;
+            return false;
+        }
+        return true;
     }
 
     public void searchRecipesApi(String query, int pageNumber) {

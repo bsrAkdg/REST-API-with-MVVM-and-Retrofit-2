@@ -20,6 +20,16 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
     private RecipeRecyclerAdapter recipeAdapter;
 
     @Override
+    public void onBackPressed() {
+        if (recipeListViewModel.onBackPressed()) {
+            // turn back categories from recipe list
+            super.onBackPressed();
+        } else {
+            displaySearchCategories();
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_list);
@@ -58,6 +68,11 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         recipeListViewModel.searchRecipesApi(category, 1);
     }
 
+    private void displaySearchCategories() {
+        recipeListViewModel.setViewingRecipes(false);
+        recipeAdapter.displaySearchCategories();
+    }
+
     private void initRecyclerView() {
         recipeAdapter = new RecipeRecyclerAdapter(this);
         VerticalSpacingItemDecorator itemDecorator = new VerticalSpacingItemDecorator(30);
@@ -90,14 +105,11 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
     private void subscribeObservers() {
         recipeListViewModel.getRecepies().observe(this, recipes -> {
             // trigger updated, deleted, anything changes
-            Testing.printRecipes(recipes, TAG);
-            recipeAdapter.setRecipes(recipes);
+            if (recipeListViewModel.isViewingRecipes()) {
+                Testing.printRecipes(recipes, TAG);
+                recipeAdapter.setRecipes(recipes);
+            }
         });
-    }
-
-    private void displaySearchCategories() {
-        recipeListViewModel.setViewingRecipes(false);
-        recipeAdapter.displaySearchCategories();
     }
 
     private void testRetrofitRequest() {
