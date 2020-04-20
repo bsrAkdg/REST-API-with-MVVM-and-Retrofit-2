@@ -27,7 +27,8 @@ public class RecipeApiClient {
     private MutableLiveData<List<Recipe>> recipes;
 
     // Retrieve data from rest api with use custom cancelable runnable
-    // This runnable provides receive data from remote, if you want you can cancel with use cancelRequest()
+    // This runnable provides receive data from remote, if you want you can cancel with use
+    // cancelRequest()
     private RetrieveRecipesRunnable retrieveRecipesRunnable;
 
     private RecipeApiClient() {
@@ -39,6 +40,12 @@ public class RecipeApiClient {
             instance = new RecipeApiClient();
         }
         return instance;
+    }
+
+    public void cancelRequest() {
+        if (retrieveRecipesRunnable != null) {
+            retrieveRecipesRunnable.cancelRequest();
+        }
     }
 
     public LiveData<List<Recipe>> getRecipes() {
@@ -55,7 +62,8 @@ public class RecipeApiClient {
         /* Future : A Future represents the result of an asynchronous computation.
           Methods are provided to check if the computation is complete, to wait for its completion
           and to retrieve the result of the computation. */
-        final Future handler = AppExecutors.getInstance().getNetworkIO().submit(retrieveRecipesRunnable);
+        final Future handler = AppExecutors.getInstance().getNetworkIO()
+                .submit(retrieveRecipesRunnable);
 
         // Time out
         AppExecutors.getInstance().getNetworkIO().schedule(() -> {

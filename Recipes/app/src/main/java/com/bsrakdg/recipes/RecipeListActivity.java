@@ -18,6 +18,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
     private RecipeListViewModel recipeListViewModel;
     private RecyclerView recipeRecyclerView;
     private RecipeRecyclerAdapter recipeAdapter;
+    private SearchView searchView;
 
     @Override
     public void onBackPressed() {
@@ -33,6 +34,8 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_list);
+
+        searchView = findViewById(R.id.search_view);
 
         // initial view model
         recipeListViewModel = new ViewModelProvider(this).get(RecipeListViewModel.class);
@@ -66,6 +69,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
     public void onCategoryClick(String category) {
         recipeAdapter.displayLoading();
         recipeListViewModel.searchRecipesApi(category, 1);
+        searchView.clearFocus();
     }
 
     private void displaySearchCategories() {
@@ -81,13 +85,13 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
     }
 
     private void initSearchView() {
-        final SearchView searchView = findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 recipeAdapter.displayLoading();
                 // new search page number should be 1
                 searchRecipesApi(s, 1);
+                searchView.clearFocus();
                 return false;
             }
 
@@ -107,6 +111,7 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
             // trigger updated, deleted, anything changes
             if (recipeListViewModel.isViewingRecipes()) {
                 Testing.printRecipes(recipes, TAG);
+                recipeListViewModel.setPerformingQuery(false);
                 recipeAdapter.setRecipes(recipes);
             }
         });
