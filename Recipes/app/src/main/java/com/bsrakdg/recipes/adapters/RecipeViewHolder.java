@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bsrakdg.recipes.R;
 import com.bsrakdg.recipes.models.Recipe;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 public class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private TextView title, publisher, socialScore;
@@ -36,5 +38,13 @@ public class RecipeViewHolder extends RecyclerView.ViewHolder implements View.On
         title.setText(recipe.getTitle());
         publisher.setText(recipe.getPublisher());
         socialScore.setText(String.valueOf(Math.round(recipe.getSocial_rank())));
+
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.drawable.ic_launcher_background);
+
+        Glide.with(imageView.getContext())
+                .setDefaultRequestOptions(requestOptions)
+                .load(recipe.getImage_url())
+                .into(imageView);
     }
 }
