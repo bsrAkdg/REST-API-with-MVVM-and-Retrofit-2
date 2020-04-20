@@ -2,6 +2,7 @@ package com.bsrakdg.recipes;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,7 +34,10 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
         subscribeObservers();
 
         // test request
-        testRetrofitRequest();
+        // testRetrofitRequest();
+
+        // init search view on toolbar
+        initSearchView();
     }
 
     @Override
@@ -49,6 +53,23 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
     private void initRecyclerView() {
         recipeAdapter = new RecipeRecyclerAdapter(this);
         recipeRecyclerView.setAdapter(recipeAdapter);
+    }
+
+    private void initSearchView() {
+        final SearchView searchView = findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                // new search page number should be 1
+                searchRecipesApi(s, 1);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
     }
 
     private void searchRecipesApi(String query, int pageNumber) {
