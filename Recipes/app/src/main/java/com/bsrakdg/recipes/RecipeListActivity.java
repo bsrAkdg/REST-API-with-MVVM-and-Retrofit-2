@@ -38,6 +38,12 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
         // init search view on toolbar
         initSearchView();
+
+        // firstly set categories
+        if (!recipeListViewModel.isViewingRecipes()) {
+            // display categories
+            displaySearchCategories();
+        }
     }
 
     @Override
@@ -47,7 +53,8 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
     @Override
     public void onCategoryClick(String category) {
-
+        recipeAdapter.displayLoading();
+        recipeListViewModel.searchRecipesApi(category, 1);
     }
 
     private void initRecyclerView() {
@@ -83,6 +90,11 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
             Testing.printRecipes(recipes, TAG);
             recipeAdapter.setRecipes(recipes);
         });
+    }
+
+    private void displaySearchCategories() {
+        recipeListViewModel.setViewingRecipes(false);
+        recipeAdapter.displaySearchCategories();
     }
 
     private void testRetrofitRequest() {

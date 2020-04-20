@@ -12,8 +12,19 @@ public class RecipeListViewModel extends ViewModel {
 
     private RecipeRepository recipeRepository;
 
+    // firstly show categories
+    private boolean isViewingRecipes = false; // for needed show category list
+
     public RecipeListViewModel() {
         recipeRepository = RecipeRepository.getInstance();
+    }
+
+    public boolean isViewingRecipes() {
+        return isViewingRecipes;
+    }
+
+    public void setViewingRecipes(boolean viewingRecipes) {
+        isViewingRecipes = viewingRecipes;
     }
 
     public LiveData<List<Recipe>> getRecepies() {
@@ -21,6 +32,7 @@ public class RecipeListViewModel extends ViewModel {
     }
 
     public void searchRecipesApi(String query, int pageNumber) {
+        isViewingRecipes = true; // don't show category
         recipeRepository.searchRecipesApi(query, pageNumber);
     }
 }

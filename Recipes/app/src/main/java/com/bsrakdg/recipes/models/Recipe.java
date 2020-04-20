@@ -24,16 +24,6 @@ public class Recipe implements Parcelable {
     private String image_url;
     private float social_rank;
 
-    public Recipe(String title, String publisher, String[] ingredients, String recipe_id,
-                  String image_url, float social_rank) {
-        this.title = title;
-        this.publisher = publisher;
-        this.ingredients = ingredients;
-        this.recipe_id = recipe_id;
-        this.image_url = image_url;
-        this.social_rank = social_rank;
-    }
-
     public Recipe() {
     }
 
