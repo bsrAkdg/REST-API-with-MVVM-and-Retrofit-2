@@ -19,22 +19,28 @@ public class CategoryViewHolder extends RecyclerView.ViewHolder implements View.
     private CircleImageView imageView;
     private TextView categoryTitle;
     private OnRecipeListener listener;
+    private Recipe recipe;
 
     CategoryViewHolder(@NonNull View itemView, OnRecipeListener listener) {
         super(itemView);
         imageView = itemView.findViewById(R.id.category_image);
         categoryTitle = itemView.findViewById(R.id.category_title);
         this.listener = listener;
+
+        // add onClickListener
+        itemView.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         if (listener != null) {
-            listener.onCategoryClick("");
+            listener.onCategoryClick(recipe.getTitle());
         }
     }
 
     void onBind(Recipe recipe) {
+        this.recipe = recipe;
+
         RequestOptions requestOptions = new RequestOptions()
                 .placeholder(R.drawable.ic_launcher_background);
 
