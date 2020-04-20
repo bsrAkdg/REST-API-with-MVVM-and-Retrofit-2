@@ -1,4 +1,4 @@
-package com.bsrakdg.recipes;
+package com.bsrakdg.recipes.ui;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bsrakdg.recipes.R;
 import com.bsrakdg.recipes.adapters.OnRecipeListener;
 import com.bsrakdg.recipes.adapters.RecipeRecyclerAdapter;
 import com.bsrakdg.recipes.util.Testing;

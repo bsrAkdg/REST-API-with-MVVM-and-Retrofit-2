@@ -1,4 +1,4 @@
-package com.bsrakdg.recipes;
+package com.bsrakdg.recipes.ui;
 
 import android.view.View;
 import android.widget.FrameLayout;
@@ -6,6 +6,8 @@ import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.bsrakdg.recipes.R;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
