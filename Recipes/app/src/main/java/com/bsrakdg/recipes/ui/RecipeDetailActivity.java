@@ -1,6 +1,7 @@
 package com.bsrakdg.recipes.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -12,6 +13,8 @@ import com.bsrakdg.recipes.R;
 import com.bsrakdg.recipes.models.Recipe;
 
 public class RecipeDetailActivity extends BaseActivity {
+
+    private static final String TAG = "RecipeDetailActivity";
 
     // UI Components
     private AppCompatImageView recipeImage;
@@ -40,6 +43,7 @@ public class RecipeDetailActivity extends BaseActivity {
     private void getIncomingIntent() {
         if (getIntent().hasExtra("recipe")) {
             Recipe recipe = getIntent().getParcelableExtra("recipe");
+            Log.d(TAG, "getIncomingIntent: " + recipe.getTitle());
         }
     }
 }

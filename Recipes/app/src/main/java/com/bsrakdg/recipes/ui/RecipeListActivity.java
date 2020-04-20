@@ -1,5 +1,6 @@
 package com.bsrakdg.recipes.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -82,7 +83,9 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
 
     @Override
     public void onRecipeClick(int position) {
-
+        Intent intent = new Intent(this, RecipeDetailActivity.class);
+        intent.putExtra("recipe", recipeAdapter.getSelectedRecipe(position));
+        startActivity(intent);
     }
 
     @Override
