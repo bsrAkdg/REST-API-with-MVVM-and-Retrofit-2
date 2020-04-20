@@ -29,8 +29,10 @@ android {
 
 dependencies {
     def retrofitVersion = "2.8.1"
-    def lifecycle_version = "2.2.0"
-    def viewVersion = "1.0.0"
+    def lifecycleVersion = "2.2.0"
+    def cardViewVersion = "1.0.0"
+    def recyclerViewVersion = "1.1.0"
+    def glideVersion = "4.11.0"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -42,15 +44,19 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
     // ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycleVersion"
     // LiveData
-    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata:$lifecycleVersion"
 
     // Cardview
-    implementation "androidx.cardview:cardview:$viewVersion"
+    implementation "androidx.cardview:cardview:$cardViewVersion"
 
     //Rec
-    implementation "androidx.recyclerview:recyclerview:$viewVersion"
+    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
+
+    //Glide
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
