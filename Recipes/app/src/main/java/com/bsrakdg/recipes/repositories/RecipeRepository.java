@@ -31,6 +31,10 @@ public class RecipeRepository {
         return recipeApiClient.getRecipes();
     }
 
+    public LiveData<Recipe> getRecipe() {
+        return recipeApiClient.getRecipe();
+    }
+
     public void searchNextPage() {
         searchRecipesApi(query, pageNumber + 1);
     }
@@ -44,6 +48,11 @@ public class RecipeRepository {
         this.pageNumber = pageNumber; //pagination
         recipeApiClient.searchRecipesApi(query, pageNumber);
     }
+
+    public void searchRecipeById(String recipeId) {
+        recipeApiClient.getRecipe(recipeId);
+    }
+
     public void cancelRequest() {
         recipeApiClient.cancelRequest();
     }
