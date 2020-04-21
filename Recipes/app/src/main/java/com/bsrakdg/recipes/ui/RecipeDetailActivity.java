@@ -45,6 +45,32 @@ public class RecipeDetailActivity extends BaseActivity {
         getIncomingIntent();
     }
 
+    private void displayErrorScreen(String errorMessage) {
+        recipeTitle.setText("Error retrieving recipe...");
+        recipeRank.setText("");
+
+        TextView textView = new TextView(this);
+        if (!errorMessage.equals("")) {
+            textView.setText(errorMessage);
+        } else {
+            textView.setText("Error");
+        }
+        textView.setTextSize(15);
+        textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        recipeIngredientsContainer.addView(textView);
+
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.drawable.ic_launcher_background);
+
+        Glide.with(this)
+                .setDefaultRequestOptions(requestOptions)
+                .load(R.drawable.ic_launcher_background)
+                .into(recipeImage);
+        showParent();
+        showProgressBar(false);
+    }
+
     private void findViews() {
         recipeImage = findViewById(R.id.recipe_image);
         recipeTitle = findViewById(R.id.recipe_title);
@@ -107,7 +133,7 @@ public class RecipeDetailActivity extends BaseActivity {
         recipeDetailViewModel.getRecipeRequestTimeout().observe(this, aBoolean -> {
             if (aBoolean == !recipeDetailViewModel.isDidRetrieveRecipe()) {
                 // show error time out
-                Log.d(TAG, "subscribeObserver: TIME OUT!");
+                displayErrorScreen("Error retrieving data. Check network connection.");
             }
         });
     }

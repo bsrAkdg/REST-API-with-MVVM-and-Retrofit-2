@@ -102,6 +102,9 @@ public class RecipeApiClient {
         final Future handler = AppExecutors.getInstance().getNetworkIO()
                 .submit(retrieveRecipeRunnable);
 
+        // set default timeout before each request
+        recipeRequestTimeout.setValue(false);
+
         // Time out
         AppExecutors.getInstance().getNetworkIO().schedule(() -> {
             // Let the user know its timed out
