@@ -2,11 +2,13 @@ package com.bsrakdg.recipes.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -146,6 +148,15 @@ public class RecipeListActivity extends BaseActivity implements OnRecipeListener
                 Testing.printRecipes(recipes, TAG);
                 recipeListViewModel.setPerformingQuery(false);
                 recipeAdapter.setRecipes(recipes);
+            }
+        });
+        
+        recipeListViewModel.isQueryExhausted().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean) {
+                    Log.d(TAG, "onChanged: THE QUERY EXHATUED");
+                }
             }
         });
     }

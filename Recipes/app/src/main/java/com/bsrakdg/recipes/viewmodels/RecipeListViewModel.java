@@ -24,6 +24,10 @@ public class RecipeListViewModel extends ViewModel {
         return recipeRepository.getRecipes();
     }
 
+    public LiveData<Boolean> isQueryExhausted() {
+        return recipeRepository.isQueryExhausted();
+    }
+
     public RecipeRepository getRecipeRepository() {
         return recipeRepository;
     }
@@ -68,7 +72,9 @@ public class RecipeListViewModel extends ViewModel {
     }
 
     public void searchNextPage() {
-        if (!isPerformingQuery && isViewingRecipes) {
+        if (!isPerformingQuery
+                && isViewingRecipes
+                && !isQueryExhausted().getValue()) {
             // if there isn't any working query and recyclerview shows recipes list (not
             // categories) call next page
             recipeRepository.searchNextPage();
