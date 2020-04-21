@@ -2,6 +2,8 @@ package com.bsrakdg.recipes.ui;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -13,6 +15,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.bsrakdg.recipes.R;
 import com.bsrakdg.recipes.models.Recipe;
 import com.bsrakdg.recipes.viewmodels.RecipeDetailViewModel;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 public class RecipeDetailActivity extends BaseActivity {
 
@@ -31,6 +35,8 @@ public class RecipeDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_recipe_detail);
 
         recipeDetailViewModel = new ViewModelProvider(this).get(RecipeDetailViewModel.class);
+
+        showProgressBar(true);
 
         findViews();
 
@@ -57,11 +63,41 @@ public class RecipeDetailActivity extends BaseActivity {
         }
     }
 
+    private void setRecipeDetailViewModel(Recipe recipe) {
+        if (recipe != null) {
+            RequestOptions requestOptions = new RequestOptions()
+                    .placeholder(R.drawable.ic_launcher_background);
+
+            Glide.with(this)
+                    .setDefaultRequestOptions(requestOptions)
+                    .load(recipe.getImage_url())
+                    .into(recipeImage);
+
+            recipeTitle.setText(recipe.getTitle());
+            recipeRank.setText(String.valueOf(Math.round(recipe.getSocial_rank())));
+
+            recipeIngredientsContainer.removeAllViews();
+
+            for (String ingredient : recipe.getIngredients()) {
+                TextView textView = new TextView(this);
+                textView.setText(ingredient);
+                textView.setTextSize(15);
+                textView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
+                recipeIngredientsContainer.addView(textView);
+            }
+        }
+        showParent();
+        showProgressBar(false);
+    }
+
+    private void showParent() {
+        scrollView.setVisibility(View.VISIBLE);
+    }
     private void subscribeObserver() {
         recipeDetailViewModel.getRecipe().observe(this, recipe -> {
-            if (recipe != null) {
-                Log.d(TAG, "subscribeObserver: ---------");
-                Log.d(TAG, "subscribeObserver: " + recipe.getTitle());
+            if (recipe != null && recipe.getRecipe_id().equals(recipeDetailViewModel.getRecipeId())) {
+                setRecipeDetailViewModel(recipe);
             }
         });
     }

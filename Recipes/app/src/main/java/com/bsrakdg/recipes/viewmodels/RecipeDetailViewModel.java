@@ -8,6 +8,7 @@ import com.bsrakdg.recipes.repositories.RecipeRepository;
 
 public class RecipeDetailViewModel extends ViewModel {
     private RecipeRepository recipeRepository;
+    private String recipeId;
 
     public RecipeDetailViewModel() {
         this.recipeRepository = RecipeRepository.getInstance();
@@ -17,7 +18,12 @@ public class RecipeDetailViewModel extends ViewModel {
         return recipeRepository.getRecipe();
     }
 
+    public String getRecipeId() {
+        return recipeId;
+    }
+
     public void searchRecipeById(String recipeId) {
+        this.recipeId = recipeId;
         recipeRepository.searchRecipeById(recipeId);
     }
 }
