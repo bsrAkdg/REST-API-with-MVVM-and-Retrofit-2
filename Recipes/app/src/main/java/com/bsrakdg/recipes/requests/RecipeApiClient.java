@@ -29,11 +29,14 @@ public class RecipeApiClient {
     private MutableLiveData<List<Recipe>> recipes; // for recipe list
     private MutableLiveData<Recipe> recipeDetail; // for recipe detail
 
+    private MutableLiveData<Boolean> recipeRequestTimeout = new MutableLiveData<>();
+
     // Retrieve data from rest api with use custom cancelable runnable
     // This runnable provides receive data from remote, if you want you can cancel with use
     // cancelRequest()
     private RetrieveRecipesRunnable retrieveRecipesRunnable; // for recipe list
     private RetrieveRecipeRunnable retrieveRecipeRunnable; // for recipe detail
+
 
     private RecipeApiClient() {
         recipes = new MutableLiveData<>();
@@ -62,6 +65,10 @@ public class RecipeApiClient {
 
     public LiveData<Recipe> getRecipe() {
         return recipeDetail;
+    }
+
+    public LiveData<Boolean> getRecipeRequestTimeout() {
+        return recipeRequestTimeout;
     }
 
     public void searchRecipesApi(String query, int pageNumber) {
@@ -99,6 +106,7 @@ public class RecipeApiClient {
         AppExecutors.getInstance().getNetworkIO().schedule(() -> {
             // Let the user know its timed out
             // Stop request(handler)
+            recipeRequestTimeout.postValue(true);
             handler.cancel(true);
         }, Constants.NETWORK_TIMEOUT, TimeUnit.MILLISECONDS);
     }

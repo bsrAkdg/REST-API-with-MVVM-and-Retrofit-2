@@ -35,6 +35,10 @@ public class RecipeRepository {
         return recipeApiClient.getRecipe();
     }
 
+    public LiveData<Boolean> getRecipeRequestTimeout() {
+        return recipeApiClient.getRecipeRequestTimeout();
+    }
+
     public void searchNextPage() {
         searchRecipesApi(query, pageNumber + 1);
     }

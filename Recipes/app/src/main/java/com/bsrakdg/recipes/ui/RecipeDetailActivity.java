@@ -94,10 +94,20 @@ public class RecipeDetailActivity extends BaseActivity {
     private void showParent() {
         scrollView.setVisibility(View.VISIBLE);
     }
+
     private void subscribeObserver() {
         recipeDetailViewModel.getRecipe().observe(this, recipe -> {
-            if (recipe != null && recipe.getRecipe_id().equals(recipeDetailViewModel.getRecipeId())) {
+            if (recipe != null && recipe.getRecipe_id()
+                    .equals(recipeDetailViewModel.getRecipeId())) {
                 setRecipeDetailViewModel(recipe);
+                recipeDetailViewModel.setDidRetrieveRecipe(true);
+            }
+        });
+
+        recipeDetailViewModel.getRecipeRequestTimeout().observe(this, aBoolean -> {
+            if (aBoolean == !recipeDetailViewModel.isDidRetrieveRecipe()) {
+                // show error time out
+                Log.d(TAG, "subscribeObserver: TIME OUT!");
             }
         });
     }
