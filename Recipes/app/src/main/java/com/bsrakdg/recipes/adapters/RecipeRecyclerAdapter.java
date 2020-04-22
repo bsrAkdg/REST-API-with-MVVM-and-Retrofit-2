@@ -19,6 +19,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private static final int RECIPE_TYPE = 1;
     private static final int LOADING_TYPE = 2;
     private static final int CATEGORY_TYPE = 3;
+    private static final int EXHAUSTED_TYPE = 4;
 
     private List<Recipe> recipes;
     private OnRecipeListener listener;
@@ -39,6 +40,10 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.layout_category_list_item, parent, false);
             return new CategoryViewHolder(view, listener);
+        } else if (viewType == EXHAUSTED_TYPE) {
+            view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.layout_exhausted_list_item, parent, false);
+            return new ExhaustedViewHolder(view);
         }
         view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.layout_recipe_list_item, parent, false);
@@ -61,6 +66,8 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             return CATEGORY_TYPE;
         } else if (recipes.get(position).getTitle().equals("LOADING...")) {
             return LOADING_TYPE;
+        } else if (recipes.get(position).getTitle().equals("EXHAUSTED...")) {
+            return EXHAUSTED_TYPE;
         } else if (position == recipes.size() - 1
                 && position != 0
                 && !recipes.get(position).getTitle().equals("EXHAUSTED...")) {
@@ -93,6 +100,17 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
+    private void hideLoading() {
+        if (isLoading()) {
+            for (Recipe recipe : recipes) {
+                if (recipe.getTitle().equals("LOADING...")) {
+                    recipes.remove(recipe);
+                }
+            }
+            notifyDataSetChanged();
+        }
+    }
+
     public void displaySearchCategories() {
         List<Recipe> categories = new ArrayList<>();
         for (int i = 0; i < Constants.DEFAULT_SEARCH_CATEGORIES.length; i++) {
@@ -106,15 +124,23 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         notifyDataSetChanged();
     }
 
-    public void setRecipes(List<Recipe> recipes) {
-        this.recipes = recipes;
-        notifyDataSetChanged();
-    }
-
     public Recipe getSelectedRecipe(int position) {
         if (recipes != null && recipes.size() > 0) {
             return recipes.get(position);
         }
         return null;
+    }
+
+    public void setQueryExhausted() {
+        hideLoading();
+        Recipe exhaustedRecipe = new Recipe();
+        exhaustedRecipe.setTitle("EXHAUSTED...");
+        recipes.add(exhaustedRecipe);
+        notifyDataSetChanged();
+    }
+
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
+        notifyDataSetChanged();
     }
 }
