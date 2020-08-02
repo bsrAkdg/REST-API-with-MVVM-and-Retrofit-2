@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph_main"
+    app:startDestination="@id/genresFragment">
+
+    <fragment
+        android:id="@+id/genresFragment"
+        android:name="com.bsrakdg.movies.ui.GenresFragment"
+        android:label="GenresFragment" >
+        <action
+            android:id="@+id/action_genresFragment_to_moviesFragment"
+            app:destination="@id/moviesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/moviesFragment"
+        android:name="com.bsrakdg.movies.ui.MoviesFragment"
+        android:label="MoviesFragment" >
+        <action
+            android:id="@+id/action_moviesFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.bsrakdg.movies.ui.MovieDetailFragment"
+        android:label="MovieDetailFragment" />
+</navigation>

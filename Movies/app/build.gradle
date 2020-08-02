@@ -39,6 +39,7 @@ dependencies {
     def glideVersion = "4.11.0"
     def materialVersion = "1.1.0"
     def circleImageViewVersion = "3.1.0"
+    def nav_version = "2.3.0"
 
     // for CoordinatorLayout, AppBarLayout
     implementation "com.google.android.material:material:$materialVersion"
@@ -64,6 +65,10 @@ dependencies {
 
     // Circle image view
     implementation "de.hdodenhof:circleimageview:$circleImageViewVersion"
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
